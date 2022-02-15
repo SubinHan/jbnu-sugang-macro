@@ -11,7 +11,7 @@ public class Main {
 				t.start();
 				
 				while(true) {
-					if(System.currentTimeMillis() - t.getHeartbeatTime() > 15000l) {
+					if(System.currentTimeMillis() - t.getHeartbeatTime() > 7000l) {
 						m.close();
 						t.stop();
 						break;

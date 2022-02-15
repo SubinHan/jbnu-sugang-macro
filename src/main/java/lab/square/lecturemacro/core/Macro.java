@@ -3,6 +3,7 @@ package lab.square.lecturemacro.core;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,20 +12,22 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Macro implements Runnable, IHeartbeatable {
+	
+//	private static final String ID_INPUT = "//*[@id=\"mainframe_VFrameSet_LoginFrame_form_div_login_div_form_edt_hakbun_input\"]";
+//	private static final String PASSWORD_INPUT = "//*[@id=\"mainframe_VFrameSet_LoginFrame_form_div_login_div_form_edt_passwd_input\"]";
+//	private static final String TOPMENU_BUTTON = "//*[@id=\"mainframe_VFrameSet_TopFrame_form_div_top_mnu_topmenu_0001\"]";
+//	private static final String SHOPPINGBAG_BUTTON = "//*[@id=\"mainframe_VFrameSet_WorkFrame_form_div_work_btn_rsrvCourTextBoxElement\"]/div";
+//	private static final String SEARCH_BUTTON = "//*[@id=\"mainframe_VFrameSet_WorkFrame_form_div_work_div_search_edt_regularChoice_input\"]";
+//	private static final String THIRD_BUTTON = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[4]/div/div/div[1]/div/div/div/div/div";
+//	private static final String SCRIPT_OK_BUTTON = "/html/body/div[4]/div/div/div[1]/div/div[1]/div/div[7]/div";
+//	private static final String SCRIPT_OK_BUTTON2 = "//*[@id=\"mainframe_VFrameSet_LoginFrame_COM_ALERT_form_btn_closeTextBoxElement\"]/div";
+//	private static final String AI_BUTTON = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[3]/div/div/div[1]/div/div/div/div/div";
+//	private static final String THIRD_NUMBER = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[4]/div/div/div[8]/div";
+//	private static final String FORTH_NUMBER = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[5]/div/div/div[8]/div";
+//	private static final String THIRD_CAP = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[4]/div/div/div[10]/div";
 
-	private static final String ID_INPUT = "//*[@id=\"mainframe_VFrameSet_LoginFrame_form_div_login_div_form_edt_hakbun_input\"]";
-	private static final String PASSWORD_INPUT = "//*[@id=\"mainframe_VFrameSet_LoginFrame_form_div_login_div_form_edt_passwd_input\"]";
-	private static final String TOPMENU_BUTTON = "//*[@id=\"mainframe_VFrameSet_TopFrame_form_div_top_mnu_topmenu_0001\"]";
-	private static final String SHOPPINGBAG_BUTTON = "//*[@id=\"mainframe_VFrameSet_WorkFrame_form_div_work_btn_rsrvCourTextBoxElement\"]/div";
-	private static final String SEARCH_BUTTON = "//*[@id=\"mainframe_VFrameSet_WorkFrame_form_div_work_div_search_edt_regularChoice_input\"]";
-	private static final String THIRD_BUTTON = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[4]/div/div/div[1]/div/div/div/div/div";
-	private static final String SCRIPT_OK_BUTTON = "/html/body/div[4]/div/div/div[1]/div/div[1]/div/div[7]/div";
-	private static final String SCRIPT_OK_BUTTON2 = "//*[@id=\"mainframe_VFrameSet_LoginFrame_COM_ALERT_form_btn_closeTextBoxElement\"]/div";
-	private static final String AI_BUTTON = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[3]/div/div/div[1]/div/div/div/div/div";
-	private static final String THIRD_NUMBER = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[4]/div/div/div[8]/div";
-	private static final String FORTH_NUMBER = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[5]/div/div/div[8]/div";
-	private static final String THIRD_CAP = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[4]/div/div/div[10]/div";
-
+	private static final int TIMEOUT = 10;
+	
 	IHeartbeatListener listener;
 	WebDriver driver;
 	private final AtomicBoolean running = new AtomicBoolean(false);
@@ -33,6 +36,7 @@ public class Macro implements Runnable, IHeartbeatable {
 		System.setProperty("webdriver.chrome.driver", "C:/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.navigate().to("http://all.jbnu.ac.kr/jbnu/sugang/index.html");
+		driver.manage().window().setSize(new Dimension(1920, 1080));
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e1) {
@@ -97,19 +101,19 @@ public class Macro implements Runnable, IHeartbeatable {
 //		List<WebElement> list = driver.findElements(By.xpath(LIST_DIV));
 //		System.out.println(list.size());
 	}
-
-	private static void login(WebDriver driver) {
-		WebElement id = click(driver, ID_INPUT);
-		id.sendKeys("201710585");
-		WebElement password = click(driver, PASSWORD_INPUT);
-		password.sendKeys("hansoobin1*" + Keys.ENTER);
-
-		click(driver, TOPMENU_BUTTON);
-		click(driver, SHOPPINGBAG_BUTTON);
-	}
+//
+//	private static void login(WebDriver driver) {
+//		WebElement id = click(driver, ID_INPUT);
+//		id.sendKeys("201710585");
+//		WebElement password = click(driver, PASSWORD_INPUT);
+//		password.sendKeys("hansoobin1*" + Keys.ENTER);
+//
+//		click(driver, TOPMENU_BUTTON);
+//		click(driver, SHOPPINGBAG_BUTTON);
+//	}
 
 	public static WebElement click(WebDriver driver, String xpath) {
-		WebDriverWait wait = new WebDriverWait(driver, 10);
+		WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
 		WebElement element = driver.findElement(By.xpath(xpath));
@@ -119,7 +123,7 @@ public class Macro implements Runnable, IHeartbeatable {
 	}
 	
 	public static int getValue(WebDriver driver, String xpath) {
-		WebDriverWait wait = new WebDriverWait(driver, 10);
+		WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
 		WebElement element = driver.findElement(By.xpath(xpath));
 		

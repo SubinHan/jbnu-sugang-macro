@@ -19,9 +19,9 @@ public class BeforeLoginState implements IState {
 		System.out.println("BeforeLoginState performing");
 		
 		WebElement id = Macro.click(driver, ID_INPUT);
-		id.sendKeys(System.getProperty("jbnu_id"));
+		id.sendKeys(System.getenv("jbnu_id"));
 		WebElement password = Macro.click(driver, PASSWORD_INPUT);
-		password.sendKeys(System.getProperty("jbnu_pw") + Keys.ENTER);
+		password.sendKeys(System.getenv("jbnu_pw") + Keys.ENTER);
 		
 		if(AlertState.alertExists(driver))
 			return new AlertState(driver);
