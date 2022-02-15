@@ -26,7 +26,7 @@ public class Macro implements Runnable, IHeartbeatable {
 //	private static final String FORTH_NUMBER = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[5]/div/div/div[8]/div";
 //	private static final String THIRD_CAP = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[4]/div/div/div[10]/div";
 
-	private static final int TIMEOUT = 10;
+	private static final int TIMEOUT = 5;
 	
 	IHeartbeatListener listener;
 	WebDriver driver;

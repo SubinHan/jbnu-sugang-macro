@@ -17,7 +17,7 @@ public class MainMenuState implements IState {
 		
 		Macro.click(driver, TOPMENU_BUTTON);
 		
-		return new ClickedSugangState(driver);
+		return new EnterededSugangState(driver);
 	}
 	
 	

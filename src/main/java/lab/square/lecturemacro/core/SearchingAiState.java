@@ -33,7 +33,7 @@ public class SearchingAiState implements IState {
 				return new AlertState(driver);
 		}
 
-		return new ClickedSugangState(driver);
+		return new EnterededSugangState(driver);
 	}
 
 }
