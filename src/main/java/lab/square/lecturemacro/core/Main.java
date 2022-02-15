@@ -2,13 +2,13 @@ package lab.square.lecturemacro.core;
 
 public class Main {
 
-	private static final long TIMEOUT = 8000l;
+	private static final long TIMEOUT = 6500l;
 	
 	public static void main(String[] args) {
 		while(true) {
 			try {
-				Macro m = new Macro();
-				HeartbeatThread t = new HeartbeatThread(m);
+				final Macro m = new Macro();
+				final HeartbeatThread t = new HeartbeatThread(m);
 				m.setListener(t);
 				t.start();
 				
@@ -16,8 +16,14 @@ public class Main {
 					System.out.println("Checking heartbeat... : " + (System.currentTimeMillis() - t.getHeartbeatTime()));
 					if(System.currentTimeMillis() - t.getHeartbeatTime() > TIMEOUT) {
 						System.out.println("Restarting");
-						m.close();
-						t.stop();
+						new Thread(new Runnable() {
+
+							public void run() {
+								m.close();
+								t.stop();								
+							}
+							
+						}).start();
 						break;
 					}
 					Thread.sleep(1000);

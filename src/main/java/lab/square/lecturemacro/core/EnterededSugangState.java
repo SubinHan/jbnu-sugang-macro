@@ -13,7 +13,7 @@ public class EnterededSugangState implements IState {
 	}
 
 	public IState perform() {
-		System.out.println("ClickedSugangState performing");
+		System.out.println("EnteredSugangState performing");
 		
 		try {
 			Macro.click(driver, SHOPPINGBAG_BUTTON);
