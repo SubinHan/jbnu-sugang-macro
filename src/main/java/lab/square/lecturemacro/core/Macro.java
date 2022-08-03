@@ -26,6 +26,9 @@ public class Macro implements Runnable, IHeartbeatable {
 //	private static final String FORTH_NUMBER = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[5]/div/div/div[8]/div";
 //	private static final String THIRD_CAP = "/html/body/div[1]/div/div/div[3]/div/div/div[1]/div/div[1]/div[2]/div/div[19]/div[1]/div[4]/div[1]/div/div[4]/div/div/div[10]/div";
 
+	private static final String CHORMEDRIVER_ADDRESS = "C:/chromedriver.exe";
+	private static final String TARGET_ADDRESS = "http://all.jbnu.ac.kr/jbnu/sugang/index.html";
+
 	private static final int TIMEOUT = 5;
 	
 	IHeartbeatListener listener;
@@ -33,19 +36,16 @@ public class Macro implements Runnable, IHeartbeatable {
 	private final AtomicBoolean running = new AtomicBoolean(false);
 	
 	public void run() {
-		System.setProperty("webdriver.chrome.driver", "C:/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.navigate().to("http://all.jbnu.ac.kr/jbnu/sugang/index.html");
-		driver.manage().window().setSize(new Dimension(1920, 1080));
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
+		createDriverAndInit();
+		Utils.sleep(500);
 		
 		IState state = new BeforeLoginState(driver);
-		running.set(true);
 		
+		performMacro(state);
+	}
+	
+	private void performMacro(IState state) {
+		running.set(true);
 		while(running.get()) {
 			try {
 			state = state.perform();
@@ -55,62 +55,14 @@ public class Macro implements Runnable, IHeartbeatable {
 				state = new AlertState(driver);
 			}
 		}
-		
-		
-//		while (true) {
-//			if (driver.findElements(By.xpath(ID_INPUT)).size() != 0)
-//				try {
-//					login(driver);
-//				} catch (Exception e) {
-//					;
-//				}
-//
-////		Point point = click(driver, NUMERICAL_BUTTON).getLocation();
-////
-////		Actions moveActions = new Actions(driver);
-////		moveActions.moveByOffset(point.x + 10, point.y + 10).build().perform();
-////		Actions clickActions = new Actions(driver).click();
-////		Action click = clickActions.build();
-//
-//			try {
-//				click(driver, SHOPPINGBAG_BUTTON);
-//				if(getValue(driver, THIRD_NUMBER) < getValue(driver, THIRD_CAP)) {
-//					click(driver, THIRD_BUTTON);
-//					click(driver, SCRIPT_OK_BUTTON2);
-//					break;
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				driver.navigate().refresh();
-//				if (driver.findElements(By.xpath(ID_INPUT)).size() != 0)
-//					login(driver);
-//			}
-////
-////			WebElement search = click(driver, SEARCH_BUTTON);
-////			search.sendKeys("인공지능" + Keys.ENTER);
-////
-////			click(driver, AI_BUTTON);
-////			click(driver, SCRIPT_OK_BUTTON);
-//
-//		}
-
-//		WebElement element2 = click(driver, SCRIPT_OK_BUTTON);
-//		click.perform();
-
-//		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(FOR_CHECK)));
-//		List<WebElement> list = driver.findElements(By.xpath(LIST_DIV));
-//		System.out.println(list.size());
 	}
-//
-//	private static void login(WebDriver driver) {
-//		WebElement id = click(driver, ID_INPUT);
-//		id.sendKeys("201710585");
-//		WebElement password = click(driver, PASSWORD_INPUT);
-//		password.sendKeys("hansoobin1*" + Keys.ENTER);
-//
-//		click(driver, TOPMENU_BUTTON);
-//		click(driver, SHOPPINGBAG_BUTTON);
-//	}
+
+	private void createDriverAndInit() {
+		System.setProperty("webdriver.chrome.driver", CHORMEDRIVER_ADDRESS);
+		driver = new ChromeDriver();
+		driver.navigate().to(TARGET_ADDRESS);
+		driver.manage().window().setSize(new Dimension(1920, 1080));
+	}
 
 	public static WebElement click(WebDriver driver, String xpath) {
 		WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
